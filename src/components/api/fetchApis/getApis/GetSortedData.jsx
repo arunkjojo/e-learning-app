@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Table, Image } from "antd";
+import { Image } from "antd";
+import Table from "../../../../assets/table";
 
-const GetSingleData = () => {
-  let { id } = useParams();
+const GetSortedData = () => {
+  let { sort } = useParams();
   const BASE_URL = `https://fakestoreapi.com/products`;
   const [products, setProduct] = useState([]);
   const loading = useRef(true);
   useEffect(() => {
-    fetch(`${BASE_URL}/${id}`)
+    fetch(`${BASE_URL}/sort=${sort}`)
     .then(res=>{
       if (res.status === 200)
         setTimeout(() => {
@@ -18,9 +19,9 @@ const GetSingleData = () => {
       return res.json();
     })
     .then(date=>{
-      setProduct([date]);
+      setProduct(date);
     });
-  }, []);
+  }, [BASE_URL, sort]);
   const columns = [
     {
       title: "ID",
@@ -61,8 +62,16 @@ const GetSingleData = () => {
     },
   ];
   return (
-    <Table bordered={true} loading={loading.current} columns={columns} dataSource={products} />
+    <Table 
+      minHeight='100vh'
+      scroll_x={200} 
+      border={true} 
+      loading={loading.current} 
+      columns={columns} 
+      dataSource={products} 
+      pagination={true} 
+    />
   );
 };
 
-export default GetSingleData;
+export default GetSortedData;

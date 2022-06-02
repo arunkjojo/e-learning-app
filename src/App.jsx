@@ -4,15 +4,18 @@ import { Layout, Menu } from "antd";
 import { LayoutOutlined, ApiOutlined } from "@ant-design/icons";
 import Responsive from "./components/grid/Responsive";
 
-import AxiosGetAll from "./components/api/axiosApis/GetAllData";
-import AxiosGetSingle from "./components/api/axiosApis/GetSingleData";
-import AxiosGetLimit from "./components/api/axiosApis/GetLimitedData";
-import AxiosGetSort from "./components/api/axiosApis/GetSortedData";
+import AxiosApi from './components/api/axiosApis/AxiosApi'
+import FetchApi from './components/api/fetchApis/FetchApi'
 
-import FetchGetAll from "./components/api/fetchApis/GetAllData";
-import FetchGetSingle from "./components/api/fetchApis/GetSingleData";
-import FetchGetLimit from "./components/api/fetchApis/GetLimitedData";
-import FetchGetSort from "./components/api/fetchApis/GetSortedData";
+// import AxiosGetAll from "./components/api/axiosApis/getApis/GetAllData";
+// import AxiosGetSingle from "./components/api/axiosApis/getApis/GetSingleData";
+// import AxiosGetLimit from "./components/api/axiosApis/getApis/GetLimitedData";
+// import AxiosGetSort from "./components/api/axiosApis/getApis/GetSortedData";
+
+// import FetchGetAll from "./components/api/fetchApis/getApis/GetAllData";
+// import FetchGetSingle from "./components/api/fetchApis/getApis/GetSingleData";
+// import FetchGetLimit from "./components/api/fetchApis/getApis/GetLimitedData";
+// import FetchGetSort from "./components/api/fetchApis/getApis/GetSortedData";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -63,51 +66,21 @@ const App = () => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["responsive"]}
         >
           <Menu.SubMenu key="grid" title="Grid" icon={<LayoutOutlined />}>
             <Link to="/">
-              <Menu.Item key="responsive">Responsive</Menu.Item>
+              <Menu.Item key={"responsive"}>Responsive</Menu.Item>
             </Link>
           </Menu.SubMenu>
 
           <Menu.SubMenu key="api" title="API" icon={<ApiOutlined />}>
-            
-            <Menu.SubMenu key="axios" title="AXIOS">
-              <Link to="/axios_get_all">
-                <Menu.Item key="axios_get_all">All Data</Menu.Item>
-              </Link>
+            <Link to="/axios">
+              <Menu.Item key="axios">Axios API</Menu.Item>
+            </Link>
 
-              <Link to="/axios_get_single/1">
-                <Menu.Item key="axios_get_single">Single Data</Menu.Item>
-              </Link>
-
-              <Link to="/axios_get_limit/10">
-                <Menu.Item key="axios_get_limit">Limited Data</Menu.Item>
-              </Link>
-
-              <Link to="/axios_get_sort/desc">
-                <Menu.Item key="axios_get_sort">Sorted Data</Menu.Item>
-              </Link>
-            </Menu.SubMenu>
-
-            <Menu.SubMenu key="fetch" title="FETCH">
-              <Link to="/fetch_get_all">
-                <Menu.Item key="fetch_get_all">All Data</Menu.Item>
-              </Link>
-
-              <Link to="/fetch_get_single/2">
-                <Menu.Item key="fetch_get_single">Single Data</Menu.Item>
-              </Link>
-
-              <Link to="/fetch_get_limit/5">
-                <Menu.Item key="fetch_get_limit">Limited Data</Menu.Item>
-              </Link>
-
-              <Link to="/fetch_get_sort/asc">
-                <Menu.Item key="fetch_get_sort">Sorted Data</Menu.Item>
-              </Link>
-            </Menu.SubMenu>
+            <Link to="/fetch">
+              <Menu.Item key="fetch">Fetch API</Menu.Item>
+            </Link>
 
           </Menu.SubMenu>
         </Menu>
@@ -118,7 +91,8 @@ const App = () => {
         ></Header>
         <Content
           style={{
-            margin: "24px 16px 0"
+            margin: "24px 16px 0",
+            minHeight:`calc(100vh - 160px)`
           }}
         >
           <div
@@ -126,16 +100,10 @@ const App = () => {
           >
             <Routes>
               <Route path="/" exact element={<Responsive />} />
-              <Route path="/axios_get_all" element={<AxiosGetAll />} />
-              <Route path="/axios_get_single/:id" element={<AxiosGetSingle />} />
-              <Route path="/axios_get_limit/:limit" element={<AxiosGetLimit />} />
-              <Route path="/axios_get_sort/:sort" element={<AxiosGetSort />} />
-              
 
-              <Route path="/fetch_get_all" element={<FetchGetAll />} />
-              <Route path="/fetch_get_single/:id" element={<FetchGetSingle />} />
-              <Route path="/fetch_get_limit/:limit" element={<FetchGetLimit />} />
-              <Route path="/fetch_get_sort/:sort" element={<FetchGetSort />} />
+              <Route path="/axios" element={<AxiosApi />} />
+
+              <Route path="/fetch" element={<FetchApi />} />
             </Routes>
           </div>
         </Content>

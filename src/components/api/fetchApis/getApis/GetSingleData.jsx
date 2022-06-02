@@ -1,23 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Table, Image } from "antd";
+import { Image } from "antd";
+import Table from "../../../../assets/table";
 
-const GetLimitedData = () => {
-  let { limit } = useParams();
+const GetSingleData = () => {
+  let { id } = useParams();
   const BASE_URL = `https://fakestoreapi.com/products`;
-  const [products, setProduct] = useState([
-    {
-      id: "",
-      category: "",
-      title: "",
-      description: "",
-      image: "",
-      price: "",
-    },
-  ]);
+  const [products, setProduct] = useState([]);
   const loading = useRef(true);
   useEffect(() => {
-    fetch(`${BASE_URL}/limit=${limit}`)
+    fetch(`${BASE_URL}/${id}`)
     .then(res=>{
       if (res.status === 200)
         setTimeout(() => {
@@ -27,9 +19,9 @@ const GetLimitedData = () => {
       return res.json();
     })
     .then(date=>{
-      setProduct(date);
+      setProduct([date]);
     });
-  }, []);
+  }, [BASE_URL, id]);
   const columns = [
     {
       title: "ID",
@@ -70,8 +62,15 @@ const GetLimitedData = () => {
     },
   ];
   return (
-    <Table bordered={true} loading={loading.current} columns={columns} dataSource={products} />
+    <Table 
+      minHeight='100vh'
+      border={true} 
+      loading={loading.current} 
+      columns={columns} 
+      dataSource={products} 
+      pagination={false} 
+    />
   );
 };
 
-export default GetLimitedData;
+export default GetSingleData;

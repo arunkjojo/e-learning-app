@@ -1,25 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { Table, Image } from "antd";
+import { Image } from "antd";
+import Table from "../../../../assets/table";
 
-const GetLimitedData = () => {
-  let { limit } = useParams();
-  const BASE_URL = `https://fakestoreapi.com/products`;
+const GetAllData = () => {
+  const BASE_URL = `https://fakestoreapi.com/products/`;
   const [products, setProduct] = useState([]);
   const loading = useRef(true);
   useEffect(() => {
-    axios.get(`${BASE_URL}/limit=${limit}`).then((res) => {
+    fetch(`${BASE_URL}`)
+    .then(res=>{
       if (res.status === 200)
         setTimeout(() => {
           loading.current = false;
         }, 100);
       else loading.current = true;
-      let product = res.data;
-      console.log("data",product);
-      setProduct(product);
+      return res.json();
+    })
+    .then(date=>{
+      setProduct(date);
     });
-  }, []);
+  }, [BASE_URL]);
   const columns = [
     {
       title: "ID",
@@ -61,15 +61,15 @@ const GetLimitedData = () => {
   ];
   return (
     <Table 
-      scroll={{ 
-        x: 200
-      }}
-      bordered={true} 
+      minHeight='100vh'
+      scroll_x={200}  
+      border={true} 
       loading={loading.current} 
       columns={columns} 
       dataSource={products} 
+      pagination={true} 
     />
   );
 };
 
-export default GetLimitedData;
+export default GetAllData;

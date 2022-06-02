@@ -1,32 +1,36 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
-import { Table, Image } from "antd";
+import { useParams } from "react-router-dom";
+import { Image } from "antd";
+import Table from "../../../../assets/table";
 
-const GetAllData = () => {
-  const BASE_URL = `https://fakestoreapi.com/products/`;
+const GetLimitedData = () => {
+  let { limit } = useParams();
+  const BASE_URL = `https://fakestoreapi.com/products`;
   const [products, setProduct] = useState([
-    // {
-    //   id: "",
-    //   category: "",
-    //   title: "",
-    //   description: "",
-    //   image: "",
-    //   price: "",
-    // },
+    {
+      id: "",
+      category: "",
+      title: "",
+      description: "",
+      image: "",
+      price: "",
+    },
   ]);
   const loading = useRef(true);
   useEffect(() => {
-    axios.get(`${BASE_URL}`).then((res) => {
+    fetch(`${BASE_URL}/limit=${limit}`)
+    .then(res=>{
       if (res.status === 200)
         setTimeout(() => {
           loading.current = false;
-        }, 1000);
+        }, 100);
       else loading.current = true;
-      let product = res.data;
-      setProduct(product);
+      return res.json();
+    })
+    .then(date=>{
+      setProduct(date);
     });
-  }, []);
-  console.log(">>>products",products)
+  }, [BASE_URL, limit]);
   const columns = [
     {
       title: "ID",
@@ -68,15 +72,15 @@ const GetAllData = () => {
   ];
   return (
     <Table 
-      scroll={{ 
-        x: 200
-      }}
-      bordered={true} 
+      minHeight='100vh'
+      scroll_x={200} 
+      border={true} 
       loading={loading.current} 
       columns={columns} 
       dataSource={products} 
+      pagination={false} 
     />
   );
 };
 
-export default GetAllData;
+export default GetLimitedData;
