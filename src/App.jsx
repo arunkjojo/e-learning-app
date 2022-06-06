@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import { LayoutOutlined, ApiOutlined } from "@ant-design/icons";
@@ -7,51 +7,15 @@ import Responsive from "./components/grid/Responsive";
 import AxiosApi from './components/api/axiosApis/AxiosApi'
 import FetchApi from './components/api/fetchApis/FetchApi'
 
-// import AxiosGetAll from "./components/api/axiosApis/getApis/GetAllData";
-// import AxiosGetSingle from "./components/api/axiosApis/getApis/GetSingleData";
-// import AxiosGetLimit from "./components/api/axiosApis/getApis/GetLimitedData";
-// import AxiosGetSort from "./components/api/axiosApis/getApis/GetSortedData";
-
-// import FetchGetAll from "./components/api/fetchApis/getApis/GetAllData";
-// import FetchGetSingle from "./components/api/fetchApis/getApis/GetSingleData";
-// import FetchGetLimit from "./components/api/fetchApis/getApis/GetLimitedData";
-// import FetchGetSort from "./components/api/fetchApis/getApis/GetSortedData";
-
 const { Header, Content, Footer, Sider } = Layout;
-
-// const sliderMenuItems = [
-//   {
-//     key: `grid`,
-//     label: `Grid`,
-//     children: [
-//       {
-//         key: "responsive",
-//         label: `Responsive`,
-//         link: "/"
-//       }
-//     ]
-//   },
-//   {
-//     key: `api`,
-//     label: `API`,
-//     children: [
-//       {
-//         key: "axiosapi",
-//         label: `Axios`,
-//         link: "/axios"
-//       },
-//       {
-//         key: "fetchapi",
-//         label: `Fetch`,
-//         link: "/fetch"
-//       }
-//     ]
-//   }
-// ];
 
 const App = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [menuSelect, setMenuSelect] = useState(null);
 
+  useEffect(()=>{
+    setMenuSelect('responsive');
+  },[]);
   return (
     <Layout>
       <Sider
@@ -66,20 +30,24 @@ const App = () => {
         <Menu
           theme="dark"
           mode="inline"
+          selectable={true}
+          defaultOpenKeys={['grid']}
+          defaultSelectedKeys={['responsive']}
+          selectedKeys={[`${menuSelect}`]}
         >
           <Menu.SubMenu key="grid" title="Grid" icon={<LayoutOutlined />}>
             <Link to="/">
-              <Menu.Item key={"responsive"}>Responsive</Menu.Item>
+              <Menu.Item onClick={()=>setMenuSelect('responsive')} className={menuSelect === 'responsive' ? 'ant-menu-item-selected' : null} key="responsive">Responsive</Menu.Item>
             </Link>
           </Menu.SubMenu>
 
           <Menu.SubMenu key="api" title="API" icon={<ApiOutlined />}>
             <Link to="/axios">
-              <Menu.Item key="axios">Axios API</Menu.Item>
+              <Menu.Item onClick={()=>setMenuSelect('axios')} className={menuSelect === 'axios' ? 'ant-menu-item-selected' : null} key="axios">Axios API</Menu.Item>
             </Link>
 
             <Link to="/fetch">
-              <Menu.Item key="fetch">Fetch API</Menu.Item>
+              <Menu.Item onClick={()=>setMenuSelect('fetch')} className={menuSelect === 'fetch' ? 'ant-menu-item-selected' : null} key="fetch">Fetch API</Menu.Item>
             </Link>
 
           </Menu.SubMenu>
@@ -99,7 +67,7 @@ const App = () => {
             className="site-layout-background"
           >
             <Routes>
-              <Route path="/" exact element={<Responsive />} />
+              <Route path="/" element={<Responsive />} />
 
               <Route path="/axios" element={<AxiosApi />} />
 
