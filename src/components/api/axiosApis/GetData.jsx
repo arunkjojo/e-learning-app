@@ -1,25 +1,33 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Image } from "antd";
-import Table from "../../../../assets/table";
+import axios from "axios";
+import { Image, Table } from "antd";
 
-const GetAllData = () => {
+const GetData = () => {
   const BASE_URL = `https://fakestoreapi.com/products/`;
   const [products, setProduct] = useState([]);
   const loading = useRef(true);
   useEffect(() => {
-    fetch(`${BASE_URL}`)
-    .then(res=>{
+    axios(`${BASE_URL}`,{
+      method: 'GET',
+      mode: 'no-cors',
+      headers: {
+        'Access-Control-Allow-Origin': 'http://localhost:3000',
+        'Content-Type': 'application/json',
+      },
+      withCredentials: false,
+      credentials: 'same-origin',
+    }).then(res => {
       if (res.status === 200)
         setTimeout(() => {
           loading.current = false;
         }, 100);
       else loading.current = true;
-      return res.json();
-    })
-    .then(date=>{
-      setProduct(date);
+      setProduct(res.data);
+    }).catch((error)=>{
+      loading.current = false;
+      console.log("Error",error);
     });
-  }, [BASE_URL]);
+  },[BASE_URL]);
   const columns = [
     {
       title: "ID",
@@ -61,15 +69,19 @@ const GetAllData = () => {
   ];
   return (
     <Table 
-      minHeight='100vh'
-      scroll_x={200}  
+      style={{
+        minHeight:'100vh',
+      }}
+      scroll={{ 
+        x: 200
+      }}
       border={true} 
       loading={loading.current} 
       columns={columns} 
       dataSource={products} 
-      pagination={true} 
+      pagination={false} 
     />
   );
 };
 
-export default GetAllData;
+export default GetData;

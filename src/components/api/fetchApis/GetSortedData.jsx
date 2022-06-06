@@ -1,40 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import { Image } from "antd";
-import Table from "../../../../assets/table";
+import { Image, Table } from "antd";
 
-
-const GetSingleData = () => {
-
-  let { id } = useParams();
+const GetSortedData = () => {
+  let { sort } = useParams();
   const BASE_URL = `https://fakestoreapi.com/products`;
   const [products, setProduct] = useState([]);
   const loading = useRef(true);
   useEffect(() => {
-    axios.get(`${BASE_URL}/${id}`,{
-      method: 'GET',
-      mode: 'no-cors',
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true,
-      credentials: 'same-origin',
-    }).then((res) => {
-      if (res.status === 200)
-        setTimeout(() => {
-          loading.current = false;
-        }, 100);
-      else loading.current = true;
-      return res.json()
-    }).then(data =>{
-      console.log("data", data);
-      setProduct([data]);
-    }).catch((error)=>{
-      console.log("Error",error);
-    });
-  }, []);
+    fetch(`${BASE_URL}/sort=${sort}`)
+      .then(res => {
+        if (res.status === 200)
+          setTimeout(() => {
+            loading.current = false;
+          }, 100);
+        else loading.current = true;
+        return res.json();
+      })
+      .then(date => {
+        setProduct(date);
+      });
+  }, [BASE_URL, sort]);
   const columns = [
     {
       title: "ID",
@@ -75,15 +61,20 @@ const GetSingleData = () => {
     },
   ];
   return (
-    <Table 
-      minHeight='100vh' 
-      border={true} 
-      loading={loading.current} 
-      columns={columns} 
-      dataSource={products} 
-      pagination={false} 
+    <Table
+      style={{
+        minHeight: '100vh',
+      }}
+      scroll={{
+        x: 200
+      }}
+      border={true}
+      loading={loading.current}
+      columns={columns}
+      dataSource={products}
+      pagination={true}
     />
   );
 };
 
-export default GetSingleData;
+export default GetSortedData;

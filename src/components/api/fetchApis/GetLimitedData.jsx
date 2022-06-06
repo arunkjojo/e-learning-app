@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Image } from "antd";
-import Table from "../../../../assets/table";
+import { Image, Table } from "antd";
 
 const GetLimitedData = () => {
   let { limit } = useParams();
@@ -19,17 +18,17 @@ const GetLimitedData = () => {
   const loading = useRef(true);
   useEffect(() => {
     fetch(`${BASE_URL}/limit=${limit}`)
-    .then(res=>{
-      if (res.status === 200)
-        setTimeout(() => {
-          loading.current = false;
-        }, 100);
-      else loading.current = true;
-      return res.json();
-    })
-    .then(date=>{
-      setProduct(date);
-    });
+      .then(res => {
+        if (res.status === 200)
+          setTimeout(() => {
+            loading.current = false;
+          }, 100);
+        else loading.current = true;
+        return res.json();
+      })
+      .then(date => {
+        setProduct(date);
+      });
   }, [BASE_URL, limit]);
   const columns = [
     {
@@ -71,14 +70,18 @@ const GetLimitedData = () => {
     },
   ];
   return (
-    <Table 
-      minHeight='100vh'
-      scroll_x={200} 
-      border={true} 
-      loading={loading.current} 
-      columns={columns} 
-      dataSource={products} 
-      pagination={false} 
+    <Table
+      style={{
+        minHeight: '100vh',
+      }}
+      scroll={{
+        x: 200
+      }}
+      border={true}
+      loading={loading.current}
+      columns={columns}
+      dataSource={products}
+      pagination={false}
     />
   );
 };

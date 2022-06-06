@@ -1,38 +1,32 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Image } from "antd";
-import Table from "../../../../assets/table";
+import { Image, Table } from "antd";
 
-const GetLimitedData = () => {
-  let { limit } = useParams();
-  const BASE_URL = `https://fakestoreapi.com/products`;
+const PaginatedData = () => {
+  const BASE_URL = `https://fakestoreapi.com/products/`;
   const [products, setProduct] = useState([]);
   const loading = useRef(true);
   useEffect(() => {
-    axios.get(`${BASE_URL}/limit=${limit}`,{
+    axios.get(`${BASE_URL}`, {
       method: 'GET',
       mode: 'no-cors',
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
       },
-      withCredentials: true,
+      withCredentials: false,
       credentials: 'same-origin',
-    }).then((res) => {
+    }).then(res => {
       if (res.status === 200)
         setTimeout(() => {
           loading.current = false;
         }, 100);
       else loading.current = true;
-      return res.json()
-    }).then(data =>{
-      console.log("data", data);
-      setProduct(data);
-    }).catch((error)=>{
-      console.log("Error",error);
+      setProduct(res.data);
+    }).catch((error) => {
+      console.log("Error", error);
     });
-  }, []);
+  }, [BASE_URL]);
   const columns = [
     {
       title: "ID",
@@ -73,16 +67,20 @@ const GetLimitedData = () => {
     },
   ];
   return (
-    <Table 
-      minHeight='100vh'
-      scroll_x={200} 
-      border={true} 
-      loading={loading.current} 
-      columns={columns} 
-      dataSource={products} 
-      pagination={false} 
+    <Table
+      style={{
+        minHeight: '100vh',
+      }}
+      scroll={{
+        x: 200
+      }}
+      border={true}
+      loading={loading.current}
+      columns={columns}
+      dataSource={products}
+      pagination={true}
     />
   );
 };
 
-export default GetLimitedData;
+export default PaginatedData;

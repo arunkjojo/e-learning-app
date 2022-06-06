@@ -1,27 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Image } from "antd";
-import Table from "../../../../assets/table";
+import { Image, Table } from "antd";
 
-const GetSingleData = () => {
-  let { id } = useParams();
-  const BASE_URL = `https://fakestoreapi.com/products`;
+const GetAllData = () => {
+  const BASE_URL = `https://fakestoreapi.com/products/`;
   const [products, setProduct] = useState([]);
   const loading = useRef(true);
   useEffect(() => {
-    fetch(`${BASE_URL}/${id}`)
-    .then(res=>{
-      if (res.status === 200)
-        setTimeout(() => {
-          loading.current = false;
-        }, 100);
-      else loading.current = true;
-      return res.json();
-    })
-    .then(date=>{
-      setProduct([date]);
-    });
-  }, [BASE_URL, id]);
+    fetch(`${BASE_URL}`)
+      .then(res => {
+        if (res.status === 200)
+          setTimeout(() => {
+            loading.current = false;
+          }, 100);
+        else loading.current = true;
+        return res.json();
+      })
+      .then((date) => {
+        setProduct(date);
+      });
+  }, [BASE_URL]);
   const columns = [
     {
       title: "ID",
@@ -62,15 +59,20 @@ const GetSingleData = () => {
     },
   ];
   return (
-    <Table 
-      minHeight='100vh'
-      border={true} 
-      loading={loading.current} 
-      columns={columns} 
-      dataSource={products} 
-      pagination={false} 
+    <Table
+      style={{
+        minHeight: '100vh',
+      }}
+      scroll={{
+        x: 200
+      }}
+      border={true}
+      loading={loading.current}
+      columns={columns}
+      dataSource={products}
+      pagination={true}
     />
   );
 };
 
-export default GetSingleData;
+export default GetAllData;
