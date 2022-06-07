@@ -47,7 +47,7 @@ const ButtonIcon = () => {
             <Button icon={<SearchOutlined />} size="large">
                 Search
             </Button>
-            <br />
+            
             <Tooltip title="search">
                 <Button shape="circle" icon={<SearchOutlined />} size="large" />
             </Tooltip>
