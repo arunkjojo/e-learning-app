@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import { Layout, Menu } from "antd";
-import { LayoutOutlined, ApiOutlined, TableOutlined, BookOutlined, BranchesOutlined, BugOutlined, BuildOutlined, DeliveredProcedureOutlined } from "@ant-design/icons";
+import { LayoutOutlined, ApiOutlined, TableOutlined, BookOutlined, BranchesOutlined, BugOutlined, BuildOutlined, DeliveredProcedureOutlined, CiCircleOutlined, FunctionOutlined } from "@ant-design/icons";
 import Responsive from "./components/grid/Responsive";
 
 import AxiosApi from './components/api/axiosApis/AxiosApi'
@@ -17,7 +17,11 @@ import InComponentStyle from "./components/styles/InComponentStyle";
 import ExternalStyle from "./components/styles/ExternalStyle";
 import StyledComponents from "./components/styles/StyledComponents";
 import ErrorOccuredComponent from "./components/error/ErrorOccuredComponent";
-import ErrorWithoutComponent from "./components/error/ErrorWithoutComponent";
+import ClassBasedCounter from "./components/classes/counter/ClassBasedCounter";
+import FunctionalBasedCounter from "./components/functions/counter/FunctionalBasedCounter";
+import FunctionalaBasedStateManagement from "./components/functions/stateManagement/FunctionalaBasedStateManagement";
+import ClassBasedStateManagement from "./components/classes/stateManagment/ClassBasedStateManagement";
+import ClassLifeCycle from "./components/classes/stateManagment/ClassLifeCycle";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -119,6 +123,29 @@ const App = () => {
 
           </Menu.SubMenu>
 
+          <Menu.SubMenu key="classes" title="Classes" icon={<CiCircleOutlined />}>
+            <Link to="/class-counter">
+              <Menu.Item onClick={() => setMenuSelect('class-counter')} className={menuSelect === 'class-counter' ? 'ant-menu-item-selected' : null} key="class-counter">Counter</Menu.Item>
+            </Link>
+            <Link to="/class-state">
+              <Menu.Item onClick={() => setMenuSelect('class-state')} className={menuSelect === 'class-state' ? 'ant-menu-item-selected' : null} key="class-state">State Management</Menu.Item>
+            </Link>
+
+
+            <Link to="/class-lifecycle">
+              <Menu.Item onClick={() => setMenuSelect('class-lifecycle')} className={menuSelect === 'class-lifecycle' ? 'ant-menu-item-selected' : null} key="class-lifecycle">Life Cycle</Menu.Item>
+            </Link>
+          </Menu.SubMenu>
+
+          <Menu.SubMenu key="functional" title="Functional" icon={<FunctionOutlined />}>
+            <Link to="/function-counter">
+              <Menu.Item onClick={() => setMenuSelect('function-counter')} className={menuSelect === 'function-counter' ? 'ant-menu-item-selected' : null} key="function-counter">Counter</Menu.Item>
+            </Link>
+            <Link to="/function-state">
+              <Menu.Item onClick={() => setMenuSelect('function-state')} className={menuSelect === 'function-state' ? 'ant-menu-item-selected' : null} key="function-state">State Management</Menu.Item>
+            </Link>
+          </Menu.SubMenu>
+
           <Menu.SubMenu key="docs" title="Documantation" icon={<BookOutlined />}>
             <Link to="/button-docs">
               <Menu.Item onClick={() => setMenuSelect('button-docs')} className={menuSelect === 'button-docs' ? 'ant-menu-item-selected' : null} key="button-docs">Button Docs</Menu.Item>
@@ -174,6 +201,18 @@ const App = () => {
               <Route path="/importing-css" element={<ExternalStyle />} />
 
               <Route path="/component-css" element={<StyledComponents />} />
+
+              {/* Class Based */}
+              <Route path="/class-counter" element={<ClassBasedCounter />} />
+
+              <Route path="/class-state" element={<ClassBasedStateManagement />} />
+
+              <Route path="/class-lifecycle" element={<ClassLifeCycle />} />
+
+              {/* Functional Based */}
+              <Route path="/function-counter" element={<FunctionalBasedCounter />} />
+
+              <Route path="/function-state" element={<FunctionalaBasedStateManagement />} />
 
               {/* Documentations */}
               <Route path="/button-docs" element={<ButtonDocs />} />

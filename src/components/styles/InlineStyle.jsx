@@ -2,7 +2,14 @@ import React from 'react'
 
 function InlineStyle() {
   return (
-    <div>InlineStyle</div>
+    <div style={{textAlign:'center', color:'blue'}}>
+      <h1 style={{color:'red'}}>
+        Inline Style
+      </h1>
+      <p style={{textAlign:'right'}}>
+        Inline style paragraph
+      </p>
+    </div>
   )
 }
 
