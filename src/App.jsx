@@ -22,6 +22,7 @@ import FunctionalBasedCounter from "./components/functions/counter/FunctionalBas
 import FunctionalaBasedStateManagement from "./components/functions/stateManagement/FunctionalaBasedStateManagement";
 import ClassBasedStateManagement from "./components/classes/stateManagment/ClassBasedStateManagement";
 import ClassLifeCycle from "./components/classes/stateManagment/ClassLifeCycle";
+import ClassBasedCrud from "./components/classes/stateManagment/ClassBasedCrud";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -131,9 +132,12 @@ const App = () => {
               <Menu.Item onClick={() => setMenuSelect('class-state')} className={menuSelect === 'class-state' ? 'ant-menu-item-selected' : null} key="class-state">State Management</Menu.Item>
             </Link>
 
+            <Link to="/class-crud">
+              <Menu.Item onClick={() => setMenuSelect('class-crud')} className={menuSelect === 'class-crud' ? 'ant-menu-item-selected' : null} key="class-crud">CRUD-Class</Menu.Item>
+            </Link>
 
             <Link to="/class-lifecycle">
-              <Menu.Item onClick={() => setMenuSelect('class-lifecycle')} className={menuSelect === 'class-lifecycle' ? 'ant-menu-item-selected' : null} key="class-lifecycle">Life Cycle</Menu.Item>
+              <Menu.Item onClick={() => setMenuSelect('class-lifecycle')} className={menuSelect === 'class-lifecycle' ? 'ant-menu-item-selected' : null} key="class-lifecycle">Life Cycle Explain</Menu.Item>
             </Link>
           </Menu.SubMenu>
 
@@ -208,6 +212,9 @@ const App = () => {
               <Route path="/class-state" element={<ClassBasedStateManagement />} />
 
               <Route path="/class-lifecycle" element={<ClassLifeCycle />} />
+
+
+              <Route path="/class-crud" element={<ClassBasedCrud />} />
 
               {/* Functional Based */}
               <Route path="/function-counter" element={<FunctionalBasedCounter />} />
