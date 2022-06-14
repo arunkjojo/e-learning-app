@@ -3,6 +3,8 @@ import { Divider } from 'antd';
 
 class ClassLifeCycle extends Component {
     // The constructor gets called with the component props. You must call super and pass in the props. You can then initialize your state, setting the default values. You can even base the state on the props. "Most Common Use Case For Constructor: Setting up state, creating refs and method binding".
+
+    // super() is used to call the parent constructor. super(props) would pass props to the parent constructor. From your example, super(props) would call the React. Component constructor passing in props as the argument.
     constructor(props) {
         super(props);
         this.state = {

@@ -24,7 +24,7 @@ class ErrorOccuredComponent extends Component {
     }
     return <>
       <h1>Count is {this.state.count}</h1>
-      <Button type='primary'  onClick={this.handleClick}>Click Me</Button>
+      <Button type='primary'  onClick={this.handleClick}>Add +1</Button>
     </>
   }
 }

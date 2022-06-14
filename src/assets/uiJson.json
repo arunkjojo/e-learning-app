@@ -1,0 +1,159 @@
+{
+    "workflowStructure": {
+        "workflowName": "Sarfasi",
+        "case_request_id": 1,
+        "currentStage": 1,
+        "stages": [
+            {
+                "id": 1,
+                "label": "Stage 1",
+                "sections": [
+                    {
+                        "label": "Default",
+                        "divisions": [
+                            {
+                                "label": "Case Details",
+                                "formDivions": [
+                                    {
+                                        "label": "",
+                                        "divisionType": "OBJECTDATA",
+                                        "dataModel": "CaseDetails",
+                                        "formElements": [
+                                            {
+                                                "sequence_num": 1,
+                                                "label": "Case ID",
+                                                "DefaultValue": "case_id",
+                                                "controlType": "string",
+                                                "isEditable": false
+                                            },
+                                            {
+                                                "sequence_num": 2,
+                                                "label": "Lawyer",
+                                                "DefaultValue": "lawyer",
+                                                "controlType": "dropdown",
+                                                "isEnum": false,
+                                                "dataModel": "NPAFlagOptionsList",
+                                                "dataModelLabelProperty": "Lawyer_Name",
+                                                "dataModelKeyProperty": "Lawyer_id",
+                                                "isEditable": true
+                                            },
+                                            {
+                                                "sequence_num": 2,
+                                                "label": "NPA Flag",
+                                                "DefaultValue": "npa_flag",
+                                                "controlType": "dropdown",
+                                                "isEnum": true,
+                                                "dataModel": [
+                                                    "Yes",
+                                                    "No"
+                                                ],
+                                                "isEditable": true
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "label": "Opposition Parties",
+                                        "divisionType": "TABULARDATA",
+                                        "dataModel": "OppositionParties",
+                                        "formElements": [
+                                            {
+                                                "sequence_num": 1,
+                                                "label": "SL",
+                                                "DefaultValue": null,
+                                                "controlType": "AutoIncrement",
+                                                "isEditable": false
+                                            },
+                                            {
+                                                "sequence_num": 2,
+                                                "label": "Party Name",
+                                                "DefaultValue": "Name",
+                                                "controlType": "string",
+                                                "isEnum": false,
+                                                "isEditable": false
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Sec 13(2) Demand Notice",
+                        "divisions": [
+                            {
+                                "label": "Notice: Demand Notice",
+                                "formDivions": [
+                                    {
+                                        "label": "",
+                                        "divisionType": "OBJECTDATA",
+                                        "dataModel": "loan",
+                                        "formElements": [
+                                            {
+                                                "label": "Issue Date"
+                                            },
+                                            {
+                                                "label": "Notice"
+                                            },
+                                            {
+                                                "label": "Ref No"
+                                            },
+                                            {
+                                                "label": "Notice Amount"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "label": "",
+                                "formDivions": [
+                                    {
+                                        "label": "Publish Notice",
+                                        "divisionType": "TABULARDATA",
+                                        "dataModel": "PublishNoticeList",
+                                        "isEdit": true,
+                                        "isDelete": true,
+                                        "isAdd": true,
+                                        "formElements": [
+                                            {
+                                                "label": "Issue Date"
+                                            },
+                                            {
+                                                "label": "Notice"
+                                            },
+                                            {
+                                                "label": "Ref No"
+                                            },
+                                            {
+                                                "label": "Notice Amount"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "tasks": [
+                    {
+                        "label": "Send Demand Notice",
+                        "status": "Pending",
+                        "startDate": null,
+                        "dueDate": null,
+                        "formDivisions": [
+                            {
+                                "label": "",
+                                "formElements": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "label": "Stage 2",
+                "sections": []
+            }
+        ]
+    }
+}
